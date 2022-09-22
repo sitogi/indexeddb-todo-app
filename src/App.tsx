@@ -1,41 +1,22 @@
-import { useState } from 'react';
+import { Suspense } from 'react';
 
-import logo from '~/logo.svg';
-import '~/App.css';
+import { Box, Flex } from '@chakra-ui/react';
+import { ErrorBoundary } from 'react-error-boundary';
 
-function App() {
-  const [count, setCount] = useState(0);
+import { CenterLoader } from '~/components/CenterLoader';
+import { ErrorDetail } from '~/components/ErrorDetail';
+import { HelloIndexedDB } from '~/components/HelloIndexedDB';
 
+export const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
-    </div>
+    <Flex minH="100vh" w="100vw" justify="center" px="auto" py={4}>
+      <Box w="full" maxW="container.lg" bg="blue.50" p={6} rounded="md">
+        <ErrorBoundary fallbackRender={(fallbackProps) => <ErrorDetail error={fallbackProps.error} />}>
+          <Suspense fallback={<CenterLoader text="initializing database..." />}>
+            <HelloIndexedDB />
+          </Suspense>
+        </ErrorBoundary>
+      </Box>
+    </Flex>
   );
-}
-
-export default App;
+};
