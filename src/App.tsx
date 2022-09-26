@@ -9,7 +9,7 @@ import { HelloIndexedDB } from '~/components/HelloIndexedDB';
 
 export const App = () => {
   return (
-    <Flex minH="100vh" w="100vw" justify="center" px="auto" py={4}>
+    <Flex h="100vh" w="100vw" justify="center" px="auto" py={4}>
       <Box w="full" maxW="container.lg" bg="blue.50" p={6} rounded="md">
         <ErrorBoundary fallbackRender={(fallbackProps) => <ErrorDetail error={fallbackProps.error} />}>
           <Suspense fallback={<CenterLoader text="initializing database..." />}>

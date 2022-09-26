@@ -9,11 +9,11 @@ export const Todo = () => {
   const { data, error, mutate } = useSWR('todo', todoService.list, { suspense: true });
 
   return (
-    <Stack gap={6}>
+    <Stack h="full" gap={6}>
       <AddForm
         createTodo={async (todo) => {
           const created = await todoService.create(todo);
-          mutate((latest) => ({ todos: [...(latest?.todos || []), created] }), false);
+          await mutate((latest) => ({ todos: [...(latest?.todos || []), created] }), false);
         }}
       />
       <TodoList
@@ -21,7 +21,7 @@ export const Todo = () => {
         error={error}
         deleteTodo={async (id) => {
           await todoService.deleteTodo(id);
-          mutate((latest) => ({ todos: (latest?.todos || []).filter((todo) => todo.id !== id) }), false);
+          await mutate((latest) => ({ todos: (latest?.todos || []).filter((todo) => todo.id !== id) }), false);
         }}
       />
     </Stack>

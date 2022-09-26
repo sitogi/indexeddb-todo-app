@@ -11,7 +11,7 @@ export const TodoList = ({ todoList, error, deleteTodo }: Props) => {
   }
 
   return (
-    <Stack px={4}>
+    <Stack px={4} overflow="auto">
       {todoList.map((todo) => (
         <TodoItem key={todo.id} todo={todo} deleteTodo={deleteTodo} />
       ))}
