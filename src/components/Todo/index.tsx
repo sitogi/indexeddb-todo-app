@@ -6,7 +6,7 @@ import { TodoList } from '~/components/Todo/TodoList';
 import * as todoService from '~/services/TodoService';
 
 export const Todo = () => {
-  const { data, error, mutate } = useSWR('todo', todoService.list, { suspense: true });
+  const { data, mutate } = useSWR('todo', todoService.list, { suspense: true });
 
   return (
     <Stack h="full" gap={6}>
@@ -18,7 +18,6 @@ export const Todo = () => {
       />
       <TodoList
         todoList={data?.todos || []}
-        error={error}
         deleteTodo={async (id) => {
           await todoService.deleteTodo(id);
           await mutate((latest) => ({ todos: (latest?.todos || []).filter((todo) => todo.id !== id) }), false);
